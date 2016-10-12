@@ -65,7 +65,6 @@ public class MyMouseAdapter extends MouseAdapter {
 		switch (e.getButton()) {
 		case 1:		//Left mouse button
 			Component c = e.getComponent();
-			System.out.println(e.getComponent());
 			while (!(c instanceof JFrame)) {
 				c = c.getParent();
 				if (c == null) {
@@ -101,27 +100,16 @@ public class MyMouseAdapter extends MouseAdapter {
 							//On the left column and on the top row... do nothing
 						} else {
 							//On the grid other than on the left column and on the top row:
-							Color newColor = null;
-							do{
-							switch (generator.nextInt(5)) {
-							case 0:
-								newColor = Color.YELLOW;
-								break;
-							case 1:
-								newColor = Color.MAGENTA;
-								break;
-							case 2:
-								newColor = Color.BLACK;
-								break;
-							case 3:
-								newColor = new Color(0x964B00);   //Brown (from http://simple.wikipedia.org/wiki/List_of_colors)
-								break;
-							case 4:
-								newColor = new Color(0xB57EDC);   //Lavender (from http://simple.wikipedia.org/wiki/List_of_colors)
-								break;
-							}
-							}while(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(newColor));
-							myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = newColor;
+							
+							if(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(Color.WHITE)){
+								myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = Color.GRAY;					
+								}
+								
+								else{
+									if(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(Color.RED)){
+										
+									}
+								}
 							myPanel.repaint();
 						}
 					}
@@ -136,8 +124,8 @@ public class MyMouseAdapter extends MouseAdapter {
 				comp = comp.getParent();
 				if (comp == null) {
 					//return;
+					}
 				}
-				System.out.println("hi");
 				JFrame frame = (JFrame)comp;
 				MyPanel panel = (MyPanel) frame.getContentPane().getComponent(0);  //Can also loop among components to find MyPanel
 				Insets insets = frame.getInsets();
@@ -150,7 +138,7 @@ public class MyMouseAdapter extends MouseAdapter {
 				panel.y = b;
 				int gridX1 = panel.getGridX(a, b);
 				int gridY1 = panel.getGridY(a, b);
-				System.out.println(e.getButton());
+				
 				if ((panel.mouseDownGridX == -1) || (panel.mouseDownGridY == -1)) {
 					//Had pressed outside
 					//Do nothing
@@ -172,16 +160,42 @@ public class MyMouseAdapter extends MouseAdapter {
 								
 							} else {
 								//On the grid other than on the left column and on the top row:
-//								Color newColor = null;
-//								newColor = Color.RED;
-								panel.colorArray[panel.mouseDownGridX][panel.mouseDownGridY] = Color.RED;							
-								panel.repaint();
+								int count = 0;
 								
+								if(panel.colorArray[panel.mouseDownGridX][panel.mouseDownGridY].equals(Color.WHITE)){
+									if(count==0){
+									
+									panel.colorArray[panel.mouseDownGridX][panel.mouseDownGridY] = Color.RED;	
+								
+									count++;
+										if(count==1){
+											System.out.println("hi");
+										}
+										else
+										{
+											if(count ==2){
+											System.out.println("gol");
+										}
+										
+										}
+											//count no esta sumando una vez obtiene valor de 1									
+									}}
+								
+								else{
+									if(panel.colorArray[panel.mouseDownGridX][panel.mouseDownGridY].equals(Color.RED)){
+										panel.colorArray[panel.mouseDownGridX][panel.mouseDownGridY] = Color.WHITE;
+										count-=1;
+										System.out.println(count);
+										}
+									}
+								
+								panel.repaint();
+																
 							}
 						}
 					}
 				}
-			}
+			
 			break;
 		default:    //Some other button (2 = Middle mouse button, etc.)
 			//Do nothing
